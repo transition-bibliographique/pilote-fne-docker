@@ -9,7 +9,7 @@ services:
     volumes:
       - ${DUMP}:/dump
     environment:
-      - "JAVA_OPTS=-Xms1G -Xmx4G"
+      - "JAVA_OPTS=-Xmx2G"
       - GF_SERVER_DOMAIN=localhost
     ports:
       - "8080:8080"
