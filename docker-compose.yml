@@ -8,6 +8,9 @@ services:
     restart: unless-stopped
     volumes:
       - ${DUMP}:/dump
+    environment:
+      - "JAVA_OPTS=-Xms1G -Xmx4G"
+      - GF_SERVER_DOMAIN=localhost
     ports:
       - "8080:8080"
     extra_hosts:
