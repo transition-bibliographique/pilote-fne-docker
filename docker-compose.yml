@@ -2,7 +2,6 @@ version: '3.4'
 
 services:
 
-
   pilote-fne:
     image: transitionbibliographique/pilote-fne:main-pilote-fne
     container_name: pilote-fne-container
@@ -11,6 +10,8 @@ services:
       - ${DUMP}:/dump
     ports:
       - "8080:8080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   prometheus:
     image: prom/prometheus:v2.38.0
@@ -20,6 +21,8 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   mysqld-exporter:
     image: prom/mysqld-exporter
@@ -29,6 +32,8 @@ services:
       DATA_SOURCE_NAME: "root:${MYSQL_ROOT_PASSWORD}@(host.docker.internal:3306)/my_wiki"
     ports:
       - "9104:9104"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   grafana:
     image: grafana/grafana-oss:9.1.4
@@ -44,3 +49,5 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_SERVER_DOMAIN=localhost
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
