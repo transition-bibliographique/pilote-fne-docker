@@ -6,6 +6,7 @@ services:
     image: transitionbibliographique/pilote-fne:main-pilote-fne
     container_name: pilote-fne-container
     restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
     volumes:
       - ${DUMP}:/dump
     environment:
@@ -20,6 +21,7 @@ services:
     image: prom/prometheus:v2.38.0
     container_name: prometheus-container
     restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
@@ -31,6 +33,7 @@ services:
     image: prom/mysqld-exporter
     container_name: mysqld-exporter-container
     restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
     environment:
       DATA_SOURCE_NAME: "root:${MYSQL_ROOT_PASSWORD}@(host.docker.internal:3306)/my_wiki"
     ports:
@@ -42,6 +45,7 @@ services:
     image: grafana/grafana-oss:9.1.4
     container_name: grafana-container
     restart: unless-stopped
+    mem_limit: ${MEM_LIMIT}
     volumes:
       - ./grafana/datasources:/etc/grafana/provisioning/datasources
       - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
