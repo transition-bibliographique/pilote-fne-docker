@@ -4,7 +4,7 @@ services:
 
   pilote-fne:
     image: transitionbibliographique/pilote-fne:main-pilote-fne
-    container_name: pilote-fne-container
+    container_name: pilote-fne-batch-container
     restart: unless-stopped
     volumes:
       - ${DUMP}:/dump
@@ -18,7 +18,7 @@ services:
 
   prometheus:
     image: prom/prometheus:v2.38.0
-    container_name: prometheus-container
+    container_name: pilote-fne-prometheus-container
     restart: unless-stopped
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -29,7 +29,7 @@ services:
 
   mysqld-exporter:
     image: prom/mysqld-exporter
-    container_name: mysqld-exporter-container
+    container_name: pilote-fne-mysqld-exporter-container
     restart: unless-stopped
     environment:
       DATA_SOURCE_NAME: "root:${MYSQL_ROOT_PASSWORD}@(host.docker.internal:23306)/my_wiki"
@@ -40,7 +40,7 @@ services:
 
   grafana:
     image: grafana/grafana-oss:9.1.4
-    container_name: grafana-container
+    container_name: pilote-fne-grafana-container
     restart: unless-stopped
     volumes:
       - ./grafana/datasources:/etc/grafana/provisioning/datasources
