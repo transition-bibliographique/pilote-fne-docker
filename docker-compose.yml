@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
 
-  pilote-fne:
+  pilote-fne-main:
     image: transitionbibliographique/pilote-fne:main-pilote-fne
     container_name: pilote-fne-batch
     restart: unless-stopped
@@ -17,7 +17,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-  prometheus:
+  pilote-fne-prometheus:
     image: prom/prometheus:v2.38.0
     container_name: pilote-fne-prometheus
     restart: unless-stopped
@@ -29,7 +29,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-  mysqld-exporter:
+  pilote-fne-mysqld-exporter:
     image: prom/mysqld-exporter
     container_name: pilote-fne-mysqld-exporter
     restart: unless-stopped
@@ -41,7 +41,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-  grafana:
+  pilote-fne-grafana:
     image: grafana/grafana-oss:9.1.4
     container_name: pilote-fne-grafana
     restart: unless-stopped
@@ -50,7 +50,7 @@ services:
       - ./grafana/datasources:/etc/grafana/provisioning/datasources
       - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
     depends_on:
-      - prometheus
+      - pilote-fne-prometheus
     ports:
       - "23000:3000"
     environment:
